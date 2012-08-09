@@ -53,9 +53,12 @@ namespace nelsk
 		std::map <std::string, std::string> properties;//All properties of the object. Values are stored as strings and mapped by strings(names provided in editor).
 	};
 
-	struct Layer{
+	class Layer{
+	public:
+		Layer(int widthInTiles, int heightInTiles)
+			: tiles(sf::Quads, widthInTiles * heightInTiles * 4){}
 		int opacity;
-		std::vector <sf::Sprite> tiles;
+		sf::VertexArray tiles;
 	};
 
 	class Level

@@ -32,7 +32,7 @@ it freely, subject to the following restrictions:
 
 #include <iostream>
 #include <tinyxml.h>
-
+#include <boost/lexical_cast.hpp>
 using namespace nelsk;
 
 int Object::GetPropertyInt(std::string name)
@@ -58,7 +58,7 @@ std::string Object::GetPropertyString(std::string name)
 
 Level::Level()
 {
-    //ctor
+
 }
 
 Level::~Level()
@@ -132,7 +132,7 @@ bool Level::LoadFromFile(std::string filename)
     layerElement = map->FirstChildElement("layer");
     while (layerElement)
     {
-        Layer layer;
+        Layer layer(width, height);
         if (layerElement->Attribute("opacity") != NULL)//check if opacity attribute exists
         {
             float opacity = strtod(layerElement->Attribute("opacity"), NULL);//convert the (string) opacity element to float
@@ -171,15 +171,24 @@ bool Level::LoadFromFile(std::string filename)
 			if(tileGID != 0) // No tile placed
 			{
 				int subRectToUse = tileGID - firstTileID;//Work out the subrect ID to 'chop up' the tilesheet image.
-				sf::Sprite sprite;//sprite for the tile
-				sprite.setTexture(tilesetTexture);
-				sprite.setTextureRect(subRects[subRectToUse]);
-				sprite.setPosition(x * tileWidth, y * tileHeight);
 
-				//sprite.setColor(sf::Color(255, 255, 255, layer.opacity));//Set opacity of the tile.
+				int current = (x + y * width) * 4;
 
-				//add tile to layer
-				layer.tiles.push_back(sprite);
+				// Define the position of the 4 points of the current tile
+				layer.tiles[current + 0].position = sf::Vector2f((x + 0) * tileWidth, (y + 0) * tileHeight);
+				layer.tiles[current + 1].position = sf::Vector2f((x + 0) * tileWidth, (y + 1) * tileHeight);
+				layer.tiles[current + 2].position = sf::Vector2f((x + 1) * tileWidth, (y + 1) * tileHeight);
+				layer.tiles[current + 3].position = sf::Vector2f((x + 1) * tileWidth, (y + 0) * tileHeight);
+
+				// Define the texture coordinates of the 4 points of the current tile
+				int tx = subRectToUse;
+				int ty = 0;
+
+				layer.tiles[current + 0].texCoords = sf::Vector2f((tx + 0) * tileWidth, (ty + 0) * tileHeight);
+				layer.tiles[current + 1].texCoords = sf::Vector2f((tx + 0) * tileWidth, (ty + 1) * tileHeight);
+				layer.tiles[current + 2].texCoords = sf::Vector2f((tx + 1) * tileWidth, (ty + 1) * tileHeight);
+				layer.tiles[current + 3].texCoords = sf::Vector2f((tx + 1) * tileWidth, (ty + 0) * tileHeight);
+				
 			}
 
             tileElement = tileElement->NextSiblingElement("tile");
@@ -306,14 +315,6 @@ void Level::Draw(sf::RenderWindow &window)
 {
     for (int layer = 0; layer < layers.size(); layer++)
     {
-		int x = layers[layer].tiles.size();
-        for (int tile = 0; tile < layers[layer].tiles.size(); tile++)
-        {
-            if (drawingBounds.contains(layers[layer].tiles[tile].getPosition().x, layers[layer].tiles[tile].getPosition().y))
-            {
-                window.draw(layers[layer].tiles[tile]);
-            }
-        }
+		window.draw(layers[layer].tiles,&tilesetTexture);
     }
-
 }
