@@ -43,7 +43,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\lib\SFML2\include\;X:\Dev\lib\boost;X:\Dev\lib\tinyxml;X:\Dev\lib\ezlogger</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>SFML_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SFML_STATIC;_MBCS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
@@ -67,11 +67,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="GreenTile.cpp" />
-    <ClCompile Include="level.cpp" />
+    <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="Level.cpp" />
+    <ClCompile Include="LevelLoader.cpp" />
+    <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="RedTile.cpp" />
     <ClCompile Include="StdAfx.cpp" />
-    <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="TileSheetManager.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileSheet.cpp" />
     <ClCompile Include="main.cpp" />
@@ -79,11 +83,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h" />
+    <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="GreenTile.h" />
-    <ClInclude Include="level.h" />
+    <ClInclude Include="InputManager.h" />
+    <ClInclude Include="Level.h" />
+    <ClInclude Include="LevelLoader.h" />
+    <ClInclude Include="Managers.h" />
+    <ClInclude Include="PhysicsManager.h" />
     <ClInclude Include="RedTile.h" />
     <ClInclude Include="StdAfx.h" />
-    <ClInclude Include="TextureManager.h" />
+    <ClInclude Include="TileSheetManager.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileSheet.h" />
     <ClInclude Include="VisibleGameObject.h" />

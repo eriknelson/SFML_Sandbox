@@ -1,6 +1,5 @@
 #include "StdAfx.h"
 #include "Engine.h"
-
 using namespace nelsk;
 
 Engine::Engine()
@@ -14,7 +13,7 @@ Engine::~Engine()
 
 bool Engine::Init()
 {
-	VERBOSE_LOGGING;
+	DEBUG_LOGGING_LEVEL;
 
 	window.reset(new sf::RenderWindow(sf::VideoMode(1200,1024,32),"SFML_Sandbox"));
 
@@ -26,7 +25,7 @@ bool Engine::Init()
 void Engine::Draw()
 {
 	window->clear();
-	window->draw(_mySprite);
+
 	window->display();
 }
 
@@ -48,8 +47,6 @@ void Engine::Update()
 
 void Engine::Mainloop()
 {
-	_textureManager.LoadTexture("DemoSheet","DemoSheet.png");
-	_mySprite.setTexture(*_textureManager.GetTexture("DemoSheet"));
 	// Loop until our window is closed
 	while(window->isOpen())
 	{
@@ -67,4 +64,24 @@ void Engine::StartGame()
 		throw "Could not initialize engine";
 	}
 	Mainloop();
+}
+
+TileSheetManager& Engine::GetTileSheetManager() const
+{
+	return *_tileSheetManager;
+}
+
+GameObjectManager& Engine::GetGameObjectManager() const
+{
+	return *_gameObjectManager;
+}
+
+PhysicsManager& Engine::GetPhysicsManager() const
+{
+	return *_physicsManager;
+}
+
+InputManager& Engine::GetInputManager() const
+{
+	return *_inputManager;
 }

@@ -6,20 +6,21 @@
 
 namespace nelsk
 {
-	class TextureManager
+	class TileSheetManager
 	{
 	private:
 		typedef  std::map< std::string, boost::shared_ptr<sf::Texture> > TextureMap_td;
-		 TextureMap_td _textureMap;
+		TextureMap_td _textureMap;
 
 	public:
-		TextureManager();
-		~TextureManager();
+		TileSheetManager();
+		~TileSheetManager();
 
 		bool LoadTexture(const std::string textureName, const std::string fileName);
 		bool LoadTexture(const std::string textureName, const sf::Image& image);
 
-		const boost::shared_ptr<sf::Texture> GetTexture(std::string textureName) const;
+		TextureMap_td::const_iterator find(std::string textureName) const;
+		TextureMap_td::const_iterator end() const;
 	};
 }
 

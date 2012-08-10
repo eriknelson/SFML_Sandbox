@@ -1,15 +1,30 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <boost/scoped_ptr.hpp>
-#include "TextureManager.h"
+#include "Managers.h"
 
 namespace nelsk
 {
 	class Engine
 	{
+	public:
+		Engine();
+		~Engine();
+
+		void StartGame();
+
+		TileSheetManager& GetTileSheetManager() const;
+		GameObjectManager& GetGameObjectManager() const;
+		PhysicsManager& GetPhysicsManager() const;
+		InputManager& GetInputManager() const;
+
 	private:
 		boost::scoped_ptr<sf::RenderWindow> window;
-		TextureManager _textureManager;
+		boost::scoped_ptr<TileSheetManager> _tileSheetManager;
+		boost::scoped_ptr<GameObjectManager> _gameObjectManager;
+		boost::scoped_ptr<PhysicsManager> _physicsManager;
+		boost::scoped_ptr<InputManager> _inputManager;
+
 		sf::Sprite _mySprite;
 
 		// Initializes the engine
@@ -23,11 +38,7 @@ namespace nelsk
 		// Updates all Engine internals
 		void Update();
 
-	public:
-		Engine();
-		~Engine();
-
-		void StartGame();
+		
 	};
 }
 

@@ -26,14 +26,22 @@ it freely, subject to the following restrictions:
 
 3. This notice may not be removed or altered from any
    source distribution.
+*********************************************************************
+Erik Nelson
+08/09/2012
+
+The following source has been altered from its original state.
+
 *********************************************************************/
+
 #include "StdAfx.h"
-#include "level.h"
+#include "LevelLoader.h"
 
 #include <iostream>
 #include <tinyxml.h>
 #include <boost/lexical_cast.hpp>
 using namespace nelsk;
+
 
 int Object::GetPropertyInt(std::string name)
 {
@@ -56,17 +64,17 @@ std::string Object::GetPropertyString(std::string name)
     return properties[name];
 }
 
-Level::Level()
+LevelLoader::LevelLoader()
 {
 
 }
 
-Level::~Level()
+LevelLoader::~LevelLoader()
 {
     //dtor
 }
 
-bool Level::LoadFromFile(std::string filename)
+bool LevelLoader::LoadFromFile(std::string filename)
 {
     TiXmlDocument levelFile(filename.c_str());
 
@@ -289,9 +297,9 @@ bool Level::LoadFromFile(std::string filename)
     return true;
 }
 
-Object Level::GetObject(std::string name)
+Object LevelLoader::GetObject(std::string name)
 {
-    for (int i = 0; i < objects.size(); i++)
+    for (size_t i = 0; i < objects.size(); i++)
     {
         if (objects[i].name == name)
         {
@@ -300,7 +308,7 @@ Object Level::GetObject(std::string name)
     }
 }
 
-void Level::SetDrawingBounds(sf::Rect<float> bounds)
+void LevelLoader::SetDrawingBounds(sf::Rect<float> bounds)
 {
     drawingBounds = bounds;
 
@@ -311,10 +319,11 @@ void Level::SetDrawingBounds(sf::Rect<float> bounds)
 	drawingBounds.height += tileHeight;
 }
 
-void Level::Draw(sf::RenderWindow &window)
-{
-    for (int layer = 0; layer < layers.size(); layer++)
-    {
-		window.draw(layers[layer].tiles,&tilesetTexture);
-    }
-}
+// TODO: Deprecated. Should be moved to level itself
+//void LevelLoader::Draw(sf::RenderWindow &window)
+//{
+//    for (int layer = 0; layer < layers.size(); layer++)
+//    {
+//		window.draw(layers[layer].tiles,&tilesetTexture);
+//    }
+//}

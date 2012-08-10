@@ -26,7 +26,16 @@ it freely, subject to the following restrictions:
 
 3. This notice may not be removed or altered from any
    source distribution.
+*********************************************************************
+Erik Nelson
+08/09/2012
+
+The following source has been altered from its original state.
+
 *********************************************************************/
+
+
+
 
 #ifndef LEVEL_H
 #define LEVEL_H
@@ -61,11 +70,11 @@ namespace nelsk
 		sf::VertexArray tiles;
 	};
 
-	class Level
+	class LevelLoader
 	{
 	public:
-		Level();
-		virtual ~Level();
+		LevelLoader();
+		virtual ~LevelLoader();
 		//Loads the map. Returns false if it fails.
 		bool LoadFromFile(std::string filename);
 		//Returns the first object found with the given name. This is why we need unique names :)
